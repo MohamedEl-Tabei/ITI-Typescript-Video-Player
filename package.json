@@ -1,0 +1,14 @@
+{
+  "name": "iti-typescript-video-player",
+  "version": "1.0.0",
+  "description": "change the default style of the video player",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mohamed Eltabei",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
