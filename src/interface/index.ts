@@ -1,5 +1,6 @@
 interface IVideoPlayer{
-    src:string,
-    container:string,    
+   readonly src:string,
+    readonly container:string,    
+    
 }
 export default IVideoPlayer
