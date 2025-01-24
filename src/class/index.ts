@@ -1,10 +1,7 @@
-import IVideoPlayer from "../interface/index";
-class VideoPlayer implements IVideoPlayer {
-  constructor(
-    readonly container: string,
-    readonly src: string,
-    readonly width: string
-  ) {
+import VideoPlayerAbstract from "./abstract.js";
+class VideoPlayer extends VideoPlayerAbstract {
+  constructor(container: string, src: string, width: string) {
+    super(src, container, width);
     let startContainer = this.createControlContainer();
     let controlContainer = this.createControlContainer();
     let video = this.createVideo();
@@ -12,12 +9,14 @@ class VideoPlayer implements IVideoPlayer {
     let control = this.createControl();
     let loader = this.createLoader();
     startContainer.style.background = "black";
-    startContainer.innerHTML = `<img src="svgs/play.svg" style="width:50px;cursor:pointer;margin:auto" id="playToggle"/>`;
+    startContainer.innerHTML = `<img src="svgs/play.svg" style="width:80px;cursor:pointer;margin:auto" id="playToggle"/>`;
     startContainer.addEventListener("click", () => {
       startContainer.style.display = "none";
       video.play();
     });
     controlContainer.id = "controlContainer";
+    control.style.backgroundImage =
+      "linear-gradient(180deg, #ffffff00,rgba(0, 0, 0, 0.46), black)";
     controlContainer.append(control);
     videoContainer.append(video);
     videoContainer.append(controlContainer);
@@ -26,12 +25,12 @@ class VideoPlayer implements IVideoPlayer {
     document.getElementById(this.container)?.append(videoContainer);
     this.addEvents();
   }
-  private createVideoContainer = () => {
+  protected createVideoContainer = () => {
     let videoContainer = document.createElement("div");
     videoContainer.style.position = "relative";
     return videoContainer;
   };
-  private createVideo = () => {
+  protected createVideo = () => {
     let video = document.createElement("video");
     video.setAttribute("id", "myVideo123");
     video.setAttribute("width", this.width);
@@ -41,7 +40,7 @@ class VideoPlayer implements IVideoPlayer {
         `;
     return video;
   };
-  private createControlContainer = () => {
+  protected createControlContainer = () => {
     let controlContainer = document.createElement("div");
     controlContainer.style.position = "absolute";
     controlContainer.style.width = "100%";
@@ -51,22 +50,25 @@ class VideoPlayer implements IVideoPlayer {
     controlContainer.style.alignItems = "end";
     return controlContainer;
   };
-  private createControl = () => {
+  protected createControl = () => {
     let control = document.createElement("div");
     control.style.height = "80px";
     control.style.padding = "0px 10px";
     control.style.width = "100%";
     control.innerHTML = `
-        <input type="range" value=0 style="width:100%;height:3px" id="timeRange"/>
+        <div style="display:flex;justify-content:space-between;align-items:center;color:white">
+          <small id="currentTime">00:00:00</small>
+          <input type="range"  value=0 style="width:80%;height:3px;accent-color:white;" id="timeRange"/>
+          <small id="durationTime" >00:00:00</small>
+        </div>
         <div style="width:100%;display:flex; align-items:center;padding:10px" >
-          <img src="svgs/play.svg" style="width:35px;cursor:pointer;margin:auto" id="playToggle"/>
+          <img src="svgs/play.svg" style="width:35px;cursor:pointer;margin:auto ;opacity:.8" id="playToggle"/>
         </div>
     `;
     return control;
   };
-  private createLoader = () => {
+  protected createLoader = () => {
     let loader = this.createControlContainer();
-    loader.style.background = "black";
     loader.innerHTML = `
     <img src="svgs/spinner.svg" style="width:50px;margin:auto ;animation: spin 2s linear infinite;" />
     <style>
@@ -79,7 +81,7 @@ class VideoPlayer implements IVideoPlayer {
     loader.id = "loader";
     return loader;
   };
-  private addEvents = () => {
+  protected addEvents = () => {
     let controlContainer = document.getElementById("controlContainer");
     let timeRange: HTMLInputElement | null = document.querySelector(
       "input[id='timeRange']"
@@ -90,12 +92,18 @@ class VideoPlayer implements IVideoPlayer {
     let playToggle: HTMLImageElement | null = document.querySelector(
       "img[id='playToggle']"
     );
+    let durationTime: HTMLElement | null =
+      document.getElementById("durationTime");
+    let currentTime: HTMLElement | null =
+      document.getElementById("currentTime");
     let loader = document.getElementById("loader");
-    video?.addEventListener("loadedmetadata", function () {
+    video?.addEventListener("loadedmetadata", () => {
       timeRange?.setAttribute("max", `${video?.duration}`);
+      if (durationTime) durationTime.innerHTML = this.getTime(video.duration);
     });
-    video?.addEventListener("timeupdate", function () {
-      timeRange?.setAttribute("value", `${this.currentTime}`);
+    video?.addEventListener("timeupdate", () => {
+      if (timeRange) timeRange.value = `${video.currentTime}`;
+      if (currentTime) currentTime.innerHTML = this.getTime(video.currentTime);
     });
     video?.addEventListener("play", () => {
       playToggle?.setAttribute("src", playToggle.src.replace("play", "pause"));
@@ -128,7 +136,26 @@ class VideoPlayer implements IVideoPlayer {
     controlContainer?.addEventListener("mouseover", function () {
       this.style.opacity = "1";
     });
+    //hover
+    playToggle?.addEventListener(
+      "mouseover",
+      () => (playToggle.style.opacity = "1")
+    );
+    playToggle?.addEventListener(
+      "mouseout",
+      () => (playToggle.style.opacity = ".8")
+    );
   };
+  protected getTime(time: number) {
+    let h = time / (60 * 60);
+    time = time % (60 * 60);
+    let m = time / 60;
+    let s = time % 60;
+
+    return `${h < 10 ? "0" + h.toFixed() : h.toFixed()}:${
+      m < 10 ? "0" + m.toFixed() : m.toFixed()
+    }:${s < 10 ? "0" + s.toFixed() : s.toFixed()}`;
+  }
 }
 
 export default VideoPlayer;
