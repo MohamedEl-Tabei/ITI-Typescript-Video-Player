@@ -1,7 +1,35 @@
 import VideoPlayerAbstract from "./abstract.js";
+
 class VideoPlayer extends VideoPlayerAbstract {
-  constructor(container: string, src: string, width: string) {
-    super(src, container, width);
+  private static count = 0;
+  private count = 0;
+  private icons: {
+    play: string;
+    spinner: string;
+    pause: string;
+  };
+  constructor(
+    container: string,
+    src: string,
+    width: string,
+    theme?: {
+      color?: string;
+      backgroundColor?: string;
+      accent?: string;
+    }
+  ) {
+    let myTheme = {
+      color: "white",
+      backgroundColor: "black",
+      accent: "white",
+    };
+    super(src, container, width, { ...myTheme, ...theme });
+    this.icons = {
+      pause: `<svg style="width:35px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="${this.theme?.accent}" d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm224-72l0 144c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-144c0-13.3 10.7-24 24-24s24 10.7 24 24zm112 0l0 144c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-144c0-13.3 10.7-24 24-24s24 10.7 24 24z"/></svg>`,
+      play: `<svg style="width:35px"   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, play Inc.--><path fill="${this.theme?.accent}" d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9l0-176c0-8.7 4.7-16.7 12.3-20.9z"/></svg>`,
+      spinner: `<svg style="width:50px;margin:auto ;animation: spin 2s linear infinite;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="${this.theme?.accent}" d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/></svg>`,
+    };
+    this.count = VideoPlayer.count++;
     let startContainer = this.createControlContainer();
     let controlContainer = this.createControlContainer();
     let video = this.createVideo();
@@ -9,14 +37,16 @@ class VideoPlayer extends VideoPlayerAbstract {
     let control = this.createControl();
     let loader = this.createLoader();
     startContainer.style.background = "black";
-    startContainer.innerHTML = `<img src="svgs/play.svg" style="width:80px;cursor:pointer;margin:auto" id="playToggle"/>`;
+    startContainer.innerHTML = `
+    <div style="display:flex;justify-content:center;align-items:center;width:100%;height:100%">
+      ${this.icons.play} 
+    </div>`;
     startContainer.addEventListener("click", () => {
       startContainer.style.display = "none";
       video.play();
     });
-    controlContainer.id = "controlContainer";
-    control.style.backgroundImage =
-      "linear-gradient(180deg, #ffffff00,rgba(0, 0, 0, 0.46), black)";
+    controlContainer.id = `controlContainer${this.count}`;
+    control.style.backgroundImage = `linear-gradient(180deg, #ffffff00,rgba(0, 0, 0, 0.46), ${this.theme?.backgroundColor})`;
     controlContainer.append(control);
     videoContainer.append(video);
     videoContainer.append(controlContainer);
@@ -32,7 +62,7 @@ class VideoPlayer extends VideoPlayerAbstract {
   };
   protected createVideo = () => {
     let video = document.createElement("video");
-    video.setAttribute("id", "myVideo123");
+    video.setAttribute("id", `myVideo123${this.count}`);
     video.setAttribute("width", this.width);
     // video.controls = true;
     video.innerHTML = `
@@ -57,12 +87,12 @@ class VideoPlayer extends VideoPlayerAbstract {
     control.style.width = "100%";
     control.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:center;color:white">
-          <small id="currentTime">00:00:00</small>
-          <input type="range"  value=0 style="width:80%;height:3px;accent-color:white;" id="timeRange"/>
-          <small id="durationTime" >00:00:00</small>
+          <small id="currentTime${this.count}">00:00:00</small>
+          <input type="range"  value=0 style="width:80%;height:3px;accent-color:${this.theme.color};" id="timeRange${this.count}"/>
+          <small id="durationTime${this.count}" >00:00:00</small>
         </div>
         <div style="width:100%;display:flex; align-items:center;padding:10px" >
-          <img src="svgs/play.svg" style="width:35px;cursor:pointer;margin:auto ;opacity:.8" id="playToggle"/>
+          <div style="width:35px;cursor:pointer;margin:auto ;opacity:.8"  id="playToggle${this.count}">${this.icons.pause}</div>
         </div>
     `;
     return control;
@@ -70,7 +100,7 @@ class VideoPlayer extends VideoPlayerAbstract {
   protected createLoader = () => {
     let loader = this.createControlContainer();
     loader.innerHTML = `
-    <img src="svgs/spinner.svg" style="width:50px;margin:auto ;animation: spin 2s linear infinite;" />
+    ${this.icons.spinner}
     <style>
       @keyframes spin {
         0% { transform: rotate(0deg); }
@@ -78,44 +108,50 @@ class VideoPlayer extends VideoPlayerAbstract {
       }
     </style>`;
     loader.style.display = "none";
-    loader.id = "loader";
+    loader.id = `loader${this.count}`;
     return loader;
   };
   protected addEvents = () => {
-    let controlContainer = document.getElementById("controlContainer");
+    let controlContainer = document.getElementById(
+      `controlContainer${this.count}`
+    );
     let timeRange: HTMLInputElement | null = document.querySelector(
-      "input[id='timeRange']"
+      `input[id='timeRange${this.count}']`
     );
     let video: HTMLVideoElement | null = document.querySelector(
-      "video[id='myVideo123']"
+      `video[id='myVideo123${this.count}']`
     );
-    let playToggle: HTMLImageElement | null = document.querySelector(
-      "img[id='playToggle']"
+    let playToggle: HTMLElement | null = document.querySelector(
+      `div[id='playToggle${this.count}']`
     );
-    let durationTime: HTMLElement | null =
-      document.getElementById("durationTime");
-    let currentTime: HTMLElement | null =
-      document.getElementById("currentTime");
-    let loader = document.getElementById("loader");
+    let durationTime: HTMLElement | null = document.getElementById(
+      `durationTime${this.count}`
+    );
+    let currentTime: HTMLElement | null = document.getElementById(
+      `currentTime${this.count}`
+    );
+    let loader = document.getElementById(`loader${this.count}`);
     video?.addEventListener("loadedmetadata", () => {
       timeRange?.setAttribute("max", `${video?.duration}`);
       if (durationTime) durationTime.innerHTML = this.getTime(video.duration);
     });
     video?.addEventListener("timeupdate", () => {
-      if (timeRange) timeRange.value = `${video.currentTime}`;
+      if (timeRange) {
+        timeRange.value = `${video.currentTime}`;
+      }
       if (currentTime) currentTime.innerHTML = this.getTime(video.currentTime);
     });
     video?.addEventListener("play", () => {
-      playToggle?.setAttribute("src", playToggle.src.replace("play", "pause"));
+      if (playToggle) playToggle.innerHTML = this.icons.pause;
     });
     video?.addEventListener("pause", () => {
-      playToggle?.setAttribute("src", playToggle.src.replace("pause", "play"));
+      if (playToggle) playToggle.innerHTML = this.icons.play;
     });
     timeRange?.addEventListener("input", function () {
       if (video?.currentTime) video.currentTime = Number(this.value);
     });
     playToggle?.addEventListener("click", function () {
-      if (this.src.includes("play")) {
+      if (this.innerHTML.includes("play")) {
         video?.play();
       } else {
         video?.pause();
@@ -151,7 +187,6 @@ class VideoPlayer extends VideoPlayerAbstract {
     time = time % (60 * 60);
     let m = time / 60;
     let s = time % 60;
-
     return `${h < 10 ? "0" + h.toFixed() : h.toFixed()}:${
       m < 10 ? "0" + m.toFixed() : m.toFixed()
     }:${s < 10 ? "0" + s.toFixed() : s.toFixed()}`;

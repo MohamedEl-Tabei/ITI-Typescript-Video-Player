@@ -1,9 +1,6 @@
-* {
-  padding: 0px;
-  margin: 0px;
-}
 #container {
   display: flex;
+  gap: 10px;
   justify-content: center;
   align-items: center;
   width: 100%;
