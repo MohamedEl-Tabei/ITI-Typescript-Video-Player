@@ -1,6 +1,6 @@
 {
   "name": "me-vp",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "change the default style of the video player",
   "main": "index.js",
   "scripts": {

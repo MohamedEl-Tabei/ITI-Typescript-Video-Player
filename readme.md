@@ -49,7 +49,7 @@ Install my-project with npm
 
 ######
 
-    const videoPlayer = new VideoPlayer(
+    const videoPlayer = new MEVP(
         "container",
         "video.mp4",
         "100%",
@@ -59,7 +59,7 @@ Install my-project with npm
 
 ######
 
-    const videoPlayer1 = new VideoPlayer(
+    const videoPlayer1 = new MEVP(
         "container",
         "video.mp4",
         "100%",
