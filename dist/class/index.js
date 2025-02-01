@@ -12,6 +12,7 @@ class VideoPlayer extends VideoPlayerAbstract {
         this.createVideoContainer = () => {
             let videoContainer = document.createElement("div");
             videoContainer.style.position = "relative";
+            videoContainer.style.width = this.width;
             return videoContainer;
         };
         this.createVideo = () => {

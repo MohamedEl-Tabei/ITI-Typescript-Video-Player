@@ -10,7 +10,7 @@ const videoPlayer = new VideoPlayer(
 const videoPlayer1 = new VideoPlayer(
   "container",
   "https://ia600207.us.archive.org/15/items/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
-  "100%",
+  "500px",
   4
 );
 const videoPlayer2 = new VideoPlayer(
