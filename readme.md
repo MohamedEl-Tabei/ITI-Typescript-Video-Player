@@ -45,7 +45,7 @@ Install my-project with npm
 
 ######
 
-    import MEVP from "me-vp";
+    import MEVP from "./node_modules/me-vp/index.js";
 
 ######
 
