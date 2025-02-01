@@ -27,8 +27,6 @@ Install my-project with npm
 
 ## Screenshots
 
-![App Screenshot](https://i.ibb.co/TMqj4hCR/Screenshot-2025-01-29-184236.png)
-
 ![App Screenshot](https://i.ibb.co/HLy5pzLR/Screenshot-2025-02-01-192958.png)
 
 ![App Screenshot](https://i.ibb.co/j9VgT25X/Screenshot-2025-02-01-193026.png)
@@ -63,7 +61,7 @@ Install my-project with npm
 
     const videoPlayer1 = new VideoPlayer(
         "container",
-        "https://ia600207.us.archive.org/15/items/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+        "video.mp4",
         "100%",
         4
     );
