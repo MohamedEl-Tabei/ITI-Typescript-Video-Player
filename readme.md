@@ -15,14 +15,14 @@ customizable video player
 
 ## Demo
 
-[ITI-Typescript-Video-Player Demo](iti-typescript-video-player.vercel.app)
+[ITI-Typescript-Video-Player Demo](https://iti-typescript-video-player.vercel.app/)
 
 ## Installation
 
 Install my-project with npm
 
 ```bash
-  npm install mevp
+  npm install me-vp
 ```
 
 ## Screenshots
@@ -37,10 +37,33 @@ Install my-project with npm
 
 ![App Screenshot](https://i.ibb.co/j9SXMgPm/Screenshot-2025-02-01-193208.png)
 
-## Repository
+## NPM
 
-[ITI-Typescript-Video-Player](https://github.com/MohamedEl-Tabei/ITI-Typescript-Video-Player)
+[me-vp](https://www.npmjs.com/package/me-vp)
 
-## Documentation
+## Getting started
 
-[Documentation](https://linktodocumentation)
+    <div id="container"></div>
+
+######
+
+    import MEVP from "me-vp";
+
+######
+
+    const videoPlayer = new VideoPlayer(
+        "container",
+        "video.mp4",
+        "100%",
+        2,
+        { color: "orange", backgroundColor: "black", accent: "orange" }
+    );
+
+######
+
+    const videoPlayer1 = new VideoPlayer(
+        "container",
+        "https://ia600207.us.archive.org/15/items/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+        "100%",
+        4
+    );
