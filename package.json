@@ -1,6 +1,6 @@
 {
   "name": "@mohamedel-tabei/mevp",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "change the default style of the video player",
   "main": "index.js",
   "publishConfig": {
