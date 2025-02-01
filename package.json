@@ -1,11 +1,23 @@
 {
   "name": "me-vp",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "change the default style of the video player",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "video",
+    "player",
+    "video player",
+    "Loader",
+    "Mute",
+    "Play/Pause",
+    "Time slider",
+    "Timer",
+    "Steps",
+    "Theme"
+  ],
   "author": "Mohamed Eltabei",
   "license": "ISC",
   "devDependencies": {
