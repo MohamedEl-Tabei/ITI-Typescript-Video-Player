@@ -1,11 +1,8 @@
 {
-  "name": "@mohamedel-tabei/mevp",
-  "version": "1.2.1",
+  "name": "mevp",
+  "version": "1.0.0",
   "description": "change the default style of the video player",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@MohamedEl-Tabei"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
