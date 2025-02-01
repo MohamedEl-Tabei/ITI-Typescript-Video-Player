@@ -75,7 +75,7 @@ class VideoPlayer extends VideoPlayerAbstract {
   protected createVideo = () => {
     let video = document.createElement("video");
     video.setAttribute("id", `myVideo123${this.count}`);
-    video.setAttribute("width", this.width);
+    video.setAttribute("width", "100%");
     video.volume = 0.1;
     // video.controls = true;
     video.innerHTML = `
