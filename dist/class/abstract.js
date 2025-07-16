@@ -1,8 +1,7 @@
 class VideoPlayerAbstract {
-    constructor(src, container, width, skipTime, theme) {
+    constructor(src, container, skipTime, theme) {
         this.src = src;
         this.container = container;
-        this.width = width;
         this.skipTime = skipTime;
         this.theme = theme;
     }

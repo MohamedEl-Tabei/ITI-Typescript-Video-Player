@@ -2,7 +2,6 @@ abstract class VideoPlayerAbstract {
   constructor(
     protected src: string,
     protected container: string,
-    protected width: string,
     protected skipTime: Number,
     protected theme: {
       color: string;
