@@ -128,7 +128,8 @@ class VideoPlayer extends VideoPlayerAbstract {
                     video.currentTime = Number(this.value);
             });
             playToggle === null || playToggle === void 0 ? void 0 : playToggle.addEventListener("click", function () {
-                if (this.innerHTML.includes("play")) {
+                var _a;
+                if ((_a = this.innerHTML) === null || _a === void 0 ? void 0 : _a.includes("play")) {
                     video === null || video === void 0 ? void 0 : video.play();
                 }
                 else {
