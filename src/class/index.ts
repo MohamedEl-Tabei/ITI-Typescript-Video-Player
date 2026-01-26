@@ -193,7 +193,7 @@ class VideoPlayer extends VideoPlayerAbstract {
       if (video?.currentTime) video.currentTime = Number(this.value);
     });
     playToggle?.addEventListener("click", function () {
-      if (this.innerHTML.includes("play")) {
+      if (this.innerHTML?.includes("play")) {
         video?.play();
       } else {
         video?.pause();
